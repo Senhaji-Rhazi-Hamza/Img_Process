@@ -1,6 +1,9 @@
 package scene.shapes;
 
 import space.Point;
+import space.Utils;
+
+import java.awt.*;
 
 public abstract class Shape {
     private double diff;
@@ -9,14 +12,9 @@ public abstract class Shape {
     private double shin;
     private double refr;
     private double opac;
-    private char r;
-    private char g;
-    private char b;
-
-    public Shape(char r, char g, char b) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+    private Color color ;
+    public Shape(Color color) {
+        this.color = color;
         this.diff = 0;
         this.refl = 0;
         this.spec = 0;
@@ -26,19 +24,16 @@ public abstract class Shape {
     }
     public abstract double intersect(Point c, Point vecr);
 
-
-    public Shape(double diff, double refl, double spec, double shin, double refr, double opac, char r, char g, char b) {
+    public Shape(double diff, double refl, double spec, double shin, double refr, double opac, Color color) {
         this.diff = diff;
         this.refl = refl;
         this.spec = spec;
         this.shin = shin;
         this.refr = refr;
         this.opac = opac;
-        this.r = r;
-        this.g = g;
-        this.b = b;
+        this.color = color;
     }
-
+    public abstract Point getNormalVec(Point M);
     public double getDiff() {
         return diff;
     }
@@ -87,27 +82,11 @@ public abstract class Shape {
         this.opac = opac;
     }
 
-    public char getR() {
-        return r;
+    public Color getColor() {
+        return color;
     }
 
-    public void setR(char r) {
-        this.r = r;
-    }
-
-    public char getG() {
-        return g;
-    }
-
-    public void setG(char g) {
-        this.g = g;
-    }
-
-    public char getB() {
-        return b;
-    }
-
-    public void setB(char b) {
-        this.b = b;
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

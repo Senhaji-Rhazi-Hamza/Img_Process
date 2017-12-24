@@ -29,6 +29,73 @@ public class Point {
         return Math.sqrt(Math.pow((this.x - B.getX()), 2) + Math.pow((this.y - B.getY()), 2) +Math.pow((this.z - B.getZ()), 2));
 
     }
+    public double getDotProduct(Point vec)
+    {
+        return this.x * vec.getX() + this.y * vec.getY() + this.z * vec.getZ();
+    }
+    public Point  getScalarProduct(double scalar)
+    {
+       return new Point(this.x * scalar , this.y * scalar , this.z * scalar);
+    }
+    public Point getCrossProduct(Point vec)
+    {
+        Point tmp = new Point(0, 0, 0);
+        tmp.x = vec.getZ() * this.y - vec.getY() * this.z;
+        tmp.y = vec.getX() * this.z + vec.getZ() * this.x;
+        tmp.z = vec.getY() * this.x - vec.getX() * this.y ;
+        return tmp;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Point)) return false;
+
+        Point point = (Point) o;
+
+        if (Double.compare(point.getX(), getX()) != 0) return false;
+
+        return Double.compare(point.getZ(), getZ()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(getX());
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(getY());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(getZ());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
+
+    public Point getInv()
+    {
+        Point tmp = new Point(this);
+        tmp.x *=-1;
+        tmp.y *=-1;
+        tmp.z *=-1;
+        return tmp;
+    }
+
+    public Point getSum(Point vec)
+    {
+        Point tmp = new Point(this);
+        tmp.translate(vec);
+        return tmp;
+    }
     public void translate(Point vec)
     {
         this.x += vec.getX();
