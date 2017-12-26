@@ -5,6 +5,9 @@ import space.Utils;
 
 import java.awt.*;
 
+import static java.lang.Math.min;
+import static java.lang.Math.sqrt;
+
 public class Circle extends Shape{
 
     private Point center;
@@ -24,8 +27,16 @@ public class Circle extends Shape{
     }
 
     @Override
-    public double intersect(Point c, Point vecr) {
-        return 0;
+    public double intersect(Point cam_loc, Point vecr) {
+        Point p_c = Utils.sum(cam_loc, center.getInv() );
+        double a = Utils.getNorm(vecr);
+        double c =  Math.pow(Utils.getNorm(p_c), 2) - Math.pow(radius,2);
+        double b = 2 * Utils.dotProduct(vecr, p_c);
+        double delta = b*b - 4 * a * c ;
+        if (delta < 0)
+          return Double.MAX_VALUE;
+        else
+            return min((-b + sqrt(delta))/(2*a),(-b - sqrt(delta))/(2*a));
     }
 
     @Override

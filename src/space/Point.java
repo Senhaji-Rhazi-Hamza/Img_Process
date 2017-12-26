@@ -22,7 +22,9 @@ public class Point {
     }
     public Point(Point A)
     {
-        new Point(A.getX(), A.getY(), A.getZ());
+        this.x = A.getX();
+        this.y = A.getY();
+        this.z = A.getZ();
     }
     public double distance(Point B)
     {
@@ -54,9 +56,9 @@ public class Point {
 
         Point point = (Point) o;
 
-        if (Double.compare(point.getX(), getX()) != 0) return false;
 
-        return Double.compare(point.getZ(), getZ()) == 0;
+
+        return (Double.compare(point.getZ(), getZ()) == 0) && (Double.compare(point.getX(), getX()) != 0) ;
     }
 
     @Override
@@ -84,9 +86,9 @@ public class Point {
     public Point getInv()
     {
         Point tmp = new Point(this);
-        tmp.x *=-1;
-        tmp.y *=-1;
-        tmp.z *=-1;
+        tmp.x =tmp.x * -1;
+        tmp.y =tmp.y * -1;
+        tmp.z =tmp.z * -1;
         return tmp;
     }
 
@@ -101,6 +103,10 @@ public class Point {
         this.x += vec.getX();
         this.y += vec.getY();
         this.z += vec.getZ();
+    }
+    public Point dotTermByTerm(Point B)
+    {
+        return new Point(this.x * B.getX(), this.y * B.getY(), this.z * B.getZ());
     }
     public double getX() {
         return x;

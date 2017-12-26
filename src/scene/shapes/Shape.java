@@ -22,7 +22,7 @@ public abstract class Shape {
         this.opac = 0;
         this.refr = 0;
     }
-    public abstract double intersect(Point c, Point vecr);
+    public  double intersect(Point cam_loc, Point vecr){return Double.MAX_VALUE;}
 
     public Shape(double diff, double refl, double spec, double shin, double refr, double opac, Color color) {
         this.diff = diff;

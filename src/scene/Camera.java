@@ -9,6 +9,7 @@ public class Camera {
     private Point U, V, W;
     public Camera(double angle, Point U, Point V, Point location)
     {
+        this.angle = angle;
         this.U = Utils.getNormVec(U);
         this.V = Utils.getNormVec(V);
         W = Utils.crossProduct(U, V);
