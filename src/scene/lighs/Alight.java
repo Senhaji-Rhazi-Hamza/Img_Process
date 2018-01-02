@@ -1,12 +1,14 @@
 package scene.lighs;
 
 
+import scene.Camera;
 import scene.shapes.Shape;
 import space.Point;
 
 import space.Utils;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class Alight extends Light {
@@ -22,9 +24,14 @@ public class Alight extends Light {
     }
 
     @Override
-    public Color applyColor(Shape obj, Point cord_obj) {
+    public Color applyColor(Shape obj, Point cord_obj, ArrayList<Shape> objs, Camera camera) {
         if (obj == null)
             return Utils.multColorScalar(this.getColor(), this.la);
-        return Utils.multColorScalar(Utils.multColors(obj.getColor(), this.getColor()), this.la);
+        return normalColor(obj, cord_obj, camera);
+    }
+
+    @Override
+    public Color normalColor(Shape obj, Point cord_obj, Camera camera) {
+        return  Utils.multColorScalar(Utils.multColors(obj.getColor(), this.getColor()), this.la);
     }
 }

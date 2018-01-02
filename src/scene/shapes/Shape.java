@@ -15,14 +15,15 @@ public abstract class Shape {
     private Color color ;
     public Shape(Color color) {
         this.color = color;
-        this.diff = 0;
-        this.refl = 0;
-        this.spec = 0;
-        this.shin = 0;
+        this.diff = 1;
+        this.refl = 0.5;
+        this.spec = 1;
+        this.shin = 50;
         this.opac = 0;
         this.refr = 0;
     }
     public  double intersect(Point cam_loc, Point vecr){return Double.MAX_VALUE;}
+    public  double distanceRay(Point cordRay){return Double.MAX_VALUE;}
 
     public Shape(double diff, double refl, double spec, double shin, double refr, double opac, Color color) {
         this.diff = diff;

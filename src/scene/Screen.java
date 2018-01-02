@@ -20,7 +20,6 @@ public class Screen{
         this.board = new BufferedImage(w, h, TYPE_3BYTE_BGR);
         double L = (board.getWidth()/2)/ Math.tan(camera.getAngle()/2);
 
-       // System.out.println( Utils.scalarProcuct(camera.getW(), L).toString());
 
         this.center = Utils.sum(camera.getLocation(), Utils.scalarProcuct(camera.getW(), L));
     }

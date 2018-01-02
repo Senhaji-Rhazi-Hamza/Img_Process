@@ -41,6 +41,10 @@ public class Utils {
         A.translate(vec);
         return A;
     }
+    public static boolean colinar(Point vecA, Point vecB)
+    {
+        return Utils.getNorm(Utils.crossProduct(vecA, vecB)) < Math.pow(10, -8);
+    }
     public static Point dotTermByTerm(Point A, Point B)
     {
         return A.dotTermByTerm(B);
@@ -52,8 +56,8 @@ public class Utils {
         else
             if(B == null)
                 return new Color(A.getRed(),A.getGreen(),A.getBlue());
-        //int d = 1;
-        return new Color((A.getRed() + B.getRed()) % 255 ,(A.getGreen() + B.getGreen()) % 255,(A.getBlue() + B.getBlue()) %255);
+        int d = 1;
+        return new Color(Math.min((A.getRed() + B.getRed())  ,255) ,Math.min((A.getGreen() + B.getGreen()) , 255),Math.min((A.getBlue() + B.getBlue()) ,255));
     }
     public static Color multColors(Color A, Color B)
     {

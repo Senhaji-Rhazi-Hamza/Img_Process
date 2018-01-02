@@ -27,6 +27,9 @@ public class Circle extends Shape{
     }
 
     @Override
+    public  double distanceRay(Point cordRay){return Utils.distance(cordRay, this.center) - this.radius;}
+
+    @Override
     public double intersect(Point cam_loc, Point vecr) {
         Point p_c = Utils.sum(cam_loc, center.getInv() );
         double a = Utils.getNorm(vecr);
@@ -38,13 +41,17 @@ public class Circle extends Shape{
         else
             return min((-b + sqrt(delta))/(2*a),(-b - sqrt(delta))/(2*a));
     }
-
     @Override
+    public String toString() {
+        return "Circle :" + "Center :" + this.center +" Radius : " + this.radius + " color :" + this.getColor().toString();
+    }
+        @Override
     public Point getNormalVec(Point M) {
-        if (Math.abs(Utils.distance(M, center) - radius) < Math.pow(10, -5))
+      //  if (Math.abs(Utils.distance(M, center) - radius) < Math.pow(10, -5))
             return Utils.getNormVec(Utils.sum(M, this.center.getInv()));
-        else
-            return null;
+      //  else
+        //    System.out.println(M.toString());
+          //  return null;
     }
 
 }

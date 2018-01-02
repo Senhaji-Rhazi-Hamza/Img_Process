@@ -8,23 +8,28 @@ import java.awt.*;
 public class Plane extends Shape {
     Point vecN;
     double d;
-    public Plane(Point vecN, double d, Color color)
-    {
-        this(color);
-        this.vecN = Utils.getNormVec(vecN);
-
-        this.d = d;
-
-    }
+    Point belong;
     public Plane(Point vecN, Point belong, Color color)
     {
         this(color);
         this.vecN = Utils.getNormVec(vecN);
+        this.belong = belong;
         this.d = - Utils.dotProduct(this.vecN, belong);
 
     }
+    @Override
+    public String toString()
+    {
+        return "Plane :" + "normal vec :" + this.vecN + "color :" + this.getColor().toString();
+    }
 
 
+    @Override
+    public double distanceRay(Point cordRay)
+    {
+        Point MA = Utils.sum(cordRay, belong.getInv());
+        return Utils.dotProduct(MA,this.vecN);
+    }
     @Override
     public  double intersect(Point cam_loc, Point vecr){
 
@@ -49,6 +54,6 @@ public class Plane extends Shape {
 
     @Override
     public Point getNormalVec(Point M) {
-        return null;
+        return this.vecN;
     }
 }
