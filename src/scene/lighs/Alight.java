@@ -25,7 +25,7 @@ public class Alight extends Light {
 
     @Override
     public Color applyColor(Shape obj, Point cord_obj, ArrayList<Shape> objs, Camera camera) {
-        if (obj == null)
+        if ((obj == null)|| (cord_obj == null))
             return Utils.multColorScalar(this.getColor(), this.la);
         return normalColor(obj, cord_obj, camera);
     }

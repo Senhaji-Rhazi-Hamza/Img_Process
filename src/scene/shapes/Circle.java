@@ -27,7 +27,19 @@ public class Circle extends Shape{
     }
 
     @Override
-    public  double distanceRay(Point cordRay){return Utils.distance(cordRay, this.center) - this.radius;}
+    public  double distanceRay(Point cordRay) {
+        double d = 0;
+        try {
+             d = Utils.distance(cordRay, this.center) - this.radius;
+        } catch (Exception e)
+        {
+
+            System.out.println(e.toString());
+//            System.out.println("cord Ray : " + cordRay.toString());
+            System.out.println("center : " + this.center.toString());
+        }
+        return  d;
+    }
 
     @Override
     public double intersect(Point cam_loc, Point vecr) {

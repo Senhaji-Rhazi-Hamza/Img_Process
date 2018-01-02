@@ -40,61 +40,54 @@ public class Scene {
         Color colPixel;
         Point cordPixel = this.screen.getPixelCord(i, j);
         Shape minshape = null;
+        Point cordObj = null;
+        double distmin = Double.MAX_VALUE;
+        Point vecRay = screen.getVecRay(i, j, camera);
+
         if (rayTrace) {
-
-            
-            Point cordObj = null;
-            double t = Double.MAX_VALUE;
-            
             for (Shape shape : shapes) {
-
-                Point vecRay = screen.getVecRay(i, j, camera);
-                double res = shape.intersect(cordPixel, vecRay);
-
-                if (res < t) {
+                double dist = shape.intersect(cordPixel, vecRay);
+                if (dist < distmin) {
                     minshape = shape;
-                    t = res;
-                    cordObj = Utils.sum(cordPixel, Utils.scalarProcuct(vecRay, res));
+                    distmin = dist;
+                    cordObj = Utils.sum(cordPixel, Utils.scalarProcuct(vecRay, distmin));
                 }
             }
-            
-            colPixel = ambLignt.applyColor(minshape, cordObj, shapes, camera);
+        }
+        else {
+            cordObj = cordPixel;
+            outer:
+            for (int p = 0; p < 10 * shapes.size(); p++) {
+                for (Shape obj : shapes) {
+                    double dist = obj.distanceRay(cordObj);
 
-            for (Light light : lights) {
-
-                colPixel = Utils.sumColors(colPixel, light.applyColor(minshape, cordObj, shapes, camera));
-
-            }
-        } else {
-            Point viewRay = Utils.getNormVec(Utils.sum(cordPixel, camera.getLocation().getInv()));
-            Point cordRay = cordPixel;
-
-            double distmin = Double.MAX_VALUE;
-            for(int p = 0; p < shapes.size() ; p++)
-            {
-                for(Shape obj:shapes)
-                {
-                    double dist = obj.distanceRay(cordRay);
-                    
-                    if (dist < distmin)
-                    {
+                    if (dist < distmin) {
                         distmin = dist;
-                        if (distmin < Math.pow(10, -5))
-                        {
-                            
+                        if (distmin < Math.pow(10, -4)) {
+                            minshape = obj;
+                            break outer;
                         }
-                       
-                        // Color normC = normalColor()
+
+
                     }
                 }
                 if (distmin < Double.MAX_VALUE)
-                    cordRay = Utils.sum(cordRay ,Utils.scalarProcuct(viewRay, distmin));
-
-
+                    cordObj = Utils.sum(cordObj, Utils.scalarProcuct(vecRay, distmin));
             }
-            
-            return null;
         }
+
+
+        colPixel = ambLignt.applyColor(minshape, cordObj, shapes, camera);
+
+
+
+        for (Light light : lights) {
+
+            colPixel = Utils.sumColors(colPixel, light.applyColor(minshape, cordObj, shapes, camera));
+
+        }
+
+
         return colPixel;
     }
 
@@ -103,23 +96,12 @@ public class Scene {
 
             for (int j = 0; j < screen.getBoard().getHeight(); j++) {
 
-                Color color = getPixelColor(i, j, true);
+                Color color = getPixelColor(i, j, false);
                 screen.getBoard().setRGB(i, screen.getBoard().getHeight() - 1 - j, color.getRGB());
             }
         }
 
     }
-    /*
-    public void dispBoard()
-    {
-        for (int i = 0; i < screen.getBoard().getWidth(); i ++)
-        {
-            for (int j = 0; j < screen.getBoard().getHeight(); j ++)
-            {
 
-
-            }
-        }
-    }*/
 
 }

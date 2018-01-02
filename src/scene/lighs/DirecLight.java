@@ -23,14 +23,13 @@ public class DirecLight extends Light{
 
     @Override
     public Color applyColor(Shape obj, Point cord_obj, ArrayList<Shape> objs, Camera camera) {
-        if (obj == null)
+        if ((obj == null)|| (cord_obj == null))
             return null;
         for(Shape shape:objs)
         {
             if(shape.equals(obj))
                 continue;
             double t  = shape.intersect(cord_obj, this.direcLight);
-
             if (t < Double.MAX_VALUE)
             {
                 Point vRay2 = Utils.sum(Utils.sum(cord_obj, Utils.scalarProcuct(this.direcLight, t)), cord_obj.getInv());
@@ -38,7 +37,6 @@ public class DirecLight extends Light{
                 if (Utils.dotProduct(vRay2, this.direcLight) < 0)
                 {
                     return null;
-
                 }
             }
         }

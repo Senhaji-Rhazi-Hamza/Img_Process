@@ -22,7 +22,7 @@ public class Plight extends Light {
 
     @Override
     public Color applyColor(Shape obj, space.Point cord_obj, ArrayList<Shape> objs, Camera camera) {
-        if (obj == null)
+        if ((obj == null)|| (cord_obj == null))
             return null;
         double ld = Utils.distance(cord_obj, plight);
 
